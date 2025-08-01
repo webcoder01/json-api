@@ -5,13 +5,13 @@ namespace JsonApi\Response\Schema;
 class LinksSchema
 {
     private string $self;
-    
+
     private ?string $firstPage = null;
-    
+
     private ?string $lastPage = null;
-    
+
     private ?string $nextPage = null;
-    
+
     private ?string $previousPage = null;
 
     public function __construct(string $self)

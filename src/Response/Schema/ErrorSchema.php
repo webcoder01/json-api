@@ -9,5 +9,6 @@ class ErrorSchema
         public readonly string $code,
         public readonly ?string $title = null,
         public readonly ?string $detail = null
-    ) {}
+    ) {
+    }
 }
