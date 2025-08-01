@@ -5,7 +5,8 @@
   "keywords": [
     "php",
     "json",
-    "JSON:API"
+    "JSON-API",
+    "JSON_API"
   ],
   "license": "MIT",
   "authors": [
