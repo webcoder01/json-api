@@ -17,9 +17,11 @@ interface JsonApiResponseHandlerInterface
     public function getErrorResponse(mixed $errors): array;
 
     /**
+     * @param mixed $resources It can be a single resource or an array of resources
+     *
      * @throws SchemaNotFoundException
      */
-    public function getSuccessResponse(object $resource, string $resourceSchemaClass): array;
+    public function getSuccessResponse(mixed $resources, string $resourceSchemaClass): array;
 
     public function loadLinks(LinksSchema $links): void;
 }

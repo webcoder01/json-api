@@ -41,13 +41,13 @@ final class JsonApiResponseHandler implements JsonApiResponseHandlerInterface
         ];
     }
 
-    public function getSuccessResponse(object $resource, string $resourceSchemaClass): array
+    public function getSuccessResponse(mixed $resources, string $resourceSchemaClass): array
     {
         try {
             $resourceSchema = new ReflectionClass($resourceSchemaClass);
 
             return [
-                'data' => DataMemberBuilder::build($resourceSchema->newInstance($resource)),
+                'data' => $this->getDataResources($resources, $resourceSchema),
                 'links' => $this->links instanceof LinksSchema ? LinksMemberBuilder::build($this->links) : null,
             ];
         } catch (ReflectionException) {
@@ -58,6 +58,17 @@ final class JsonApiResponseHandler implements JsonApiResponseHandlerInterface
     public function loadLinks(LinksSchema $links): void
     {
         $this->links = $links;
+    }
+
+    private function getDataResources(mixed $resources, ReflectionClass $schemaReflectionClass): mixed
+    {
+        if (!is_array($resources)) {
+            return DataMemberBuilder::build($schemaReflectionClass->newInstance($resources));
+        }
+
+        return array_map(function ($resource) use ($schemaReflectionClass) {
+            return DataMemberBuilder::build($schemaReflectionClass->newInstance($resource));
+        }, $resources);
     }
 
     private function getErrorArrayFromSchema(ErrorSchema $schema): array
