@@ -33,8 +33,22 @@
     "sort-packages": true
   },
   "require-dev": {
+    "brainmaestro/composer-git-hooks": "^3.0",
     "friendsofphp/php-cs-fixer": "^3.85",
     "phpspec/prophecy": "^1.22",
     "phpunit/phpunit": "10.5.*"
+  },
+  "extra": {
+    "hooks": {
+      "config": {
+        "stop-on-failure": ["pre-push"]
+      },
+      "pre-commit": [
+        "./vendor/bin/php-cs-fixer fix src"
+      ],
+      "pre-push": [
+        "./vendor/bin/phpunit tests"
+      ]
+    }
   }
 }
