@@ -46,9 +46,14 @@
       "pre-commit": [
         "./vendor/bin/php-cs-fixer fix src"
       ],
+      "commit-msg": "./verify-commit-msg.sh $1",
       "pre-push": [
         "./vendor/bin/phpunit tests"
       ]
     }
+  },
+  "scripts": {
+    "post-install-cmd": "cghooks add",
+    "post-update-cmd": "cghooks update"
   }
 }
