@@ -39,7 +39,7 @@ final class UrlQueryParser
         $limit = intval($parameters['page']['limit']);
 
         return [
-            'offset' => $offset > 0 ? $offset : 1,
+            'offset' => $offset > 0 ? $offset : null,
             'limit' => $limit > 0 ? $limit : null,
         ];
     }

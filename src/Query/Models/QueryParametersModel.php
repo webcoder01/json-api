@@ -9,7 +9,7 @@ class QueryParametersModel
     /** @var SortFieldModel[] */
     private array $sortFields = [];
 
-    public function initPaginationFields(int $offset, int $limit): void
+    public function initPaginationFields(?int $offset, ?int $limit): void
     {
         $this->paginationFields = new PaginationFieldsModel($offset, $limit);
     }

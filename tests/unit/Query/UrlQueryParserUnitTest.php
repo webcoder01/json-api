@@ -49,12 +49,12 @@ class UrlQueryParserUnitTest extends TestCase
         $this->assertSame(['offset' => 2, 'limit' => 10], $model->page);
     }
 
-    public function testReturnModelWithOffsetPageSetTo1IfItIsNotGivenInUrl(): void
+    public function testReturnModelWithOffsetPageNullIfItIsNotGivenInUrl(): void
     {
         $parser = new UrlQueryParser();
         $model = $parser->parse('http://localhost/api/users?page[limit]=10');
 
-        $this->assertSame(['offset' => 1, 'limit' => 10], $model->page);
+        $this->assertSame(['offset' => null, 'limit' => 10], $model->page);
     }
 
     public function testReturnModelWithLimitPageNullIfItIsNotGivenInUrl(): void
