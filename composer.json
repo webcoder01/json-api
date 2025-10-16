@@ -1,6 +1,6 @@
 {
   "name": "webcoder01/json-api",
-  "description": "A framework agnostic that helps you generate responses based on the JSON:API specification.",
+  "description": "A framework-agnostic library designed to use HTTP requests with ease in accordance with the JSON:API specification.",
   "type": "library",
   "keywords": [
     "php",
