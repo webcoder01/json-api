@@ -2,3 +2,5 @@
 /vendor
 
 cghooks.lock
+
+*.cache
