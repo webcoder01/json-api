@@ -13,6 +13,7 @@ class JsonApiQueryHandlerUnitTest extends TestCase
         $model = $handler->getQueryParsedFromUrl('http://localhost/api/users');
 
         $this->assertSame([], $model->getSortFields());
+        $this->assertNull($model->getPaginationFields());
     }
 
     public function testReturnModelWithSortFieldsGivenInUrl(): void
@@ -34,5 +35,14 @@ class JsonApiQueryHandlerUnitTest extends TestCase
 
         $this->assertSame("age", $model->getSortFields()[0]->field);
         $this->assertFalse($model->getSortFields()[0]->isAscending);
+    }
+
+    public function testReturnModelWithPaginationFieldsGivenInUrl(): void
+    {
+        $handler = new JsonApiQueryHandler();
+        $model = $handler->getQueryParsedFromUrl('http://localhost/api/users?page[offset]=2&page[limit]=10');
+
+        $this->assertSame(2, $model->getPaginationFields()->offset);
+        $this->assertSame(10, $model->getPaginationFields()->limit);
     }
 }

@@ -6,6 +6,7 @@ class QueryParsedModel
 {
     public function __construct(
         public readonly ?string $sort,
+        public readonly array $page
     ) {
     }
 }

@@ -14,6 +14,10 @@ final class JsonApiQueryHandler implements JsonApiQueryHandlerInterface
             $this->setSortFieldsIntoModel($queryParsed->sort, $model);
         }
 
+        if (count($queryParsed->page) > 0) {
+            $model->initPaginationFields($queryParsed->page['offset'], $queryParsed->page['limit']);
+        }
+
         return $model;
     }
 

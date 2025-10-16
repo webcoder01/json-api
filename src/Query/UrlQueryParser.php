@@ -22,6 +22,25 @@ final class UrlQueryParser
             $parameters
         );
 
-        return new QueryParsedModel($parameters['sort']);
+        $pageParameters = [];
+        if (isset($parameters['page'])) {
+            $pageParameters = $this->getArrayFromPageParameters($parameters);
+        }
+
+        return new QueryParsedModel(
+            $parameters['sort'],
+            $pageParameters
+        );
+    }
+
+    private function getArrayFromPageParameters(array $parameters): array
+    {
+        $offset = intval($parameters['page']['offset']);
+        $limit = intval($parameters['page']['limit']);
+
+        return [
+            'offset' => $offset > 0 ? $offset : 1,
+            'limit' => $limit > 0 ? $limit : null,
+        ];
     }
 }
