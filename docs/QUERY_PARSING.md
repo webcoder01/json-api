@@ -65,3 +65,43 @@ $sortFields[0]->isAscending(); // returns false
 $sortFields[1]->getField(); // returns 'age'
 $sortFields[1]->isAscending(); // returns true
 ```
+
+## Implementation
+
+### Symfony (>= v5.x)
+
+Configure the class handler as a service by adding the following code in `config/services.yaml` file.
+
+```yaml
+# ...
+
+json_api.query_handler:
+  class: JsonApi\Query\JsonApiQueryHandler
+
+JsonApi\Query\JsonApiQueryHandlerInterface: '@json_api.query_handler'
+```
+
+Then inject the handler interface in your code.
+
+```php
+class ExampleService
+{
+    private JsonApiQueryHandlerInterface $queryHandler;
+    private RequestStack $requestStack;
+
+    public function __construct(
+        JsonApiQueryHandlerInterface $queryHandler,
+        RequestStack $requestStack,
+    ) {
+        $this->queryHandler = $queryHandler;
+        $this->requestStack = $requestStack;
+    }
+
+    public function getParameters(): QueryParametersModel
+    {
+        $requestUrl = $this->requestStack->getMainRequest()->getUri();
+
+        return $this->queryHandler->getQueryParsedFromUrl($requestUrl);
+    }
+}
+```
