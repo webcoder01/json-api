@@ -18,6 +18,10 @@ final class JsonApiQueryHandler implements JsonApiQueryHandlerInterface
             $model->initPaginationFields($queryParsed->page['offset'], $queryParsed->page['limit']);
         }
 
+        if (count($queryParsed->filter) > 0) {
+            $this->setFilterFieldsIntoModel($queryParsed->filter, $model);
+        }
+
         return $model;
     }
 
@@ -31,6 +35,13 @@ final class JsonApiQueryHandler implements JsonApiQueryHandlerInterface
             }
 
             $model->addSortField($field, true);
+        }
+    }
+
+    private function setFilterFieldsIntoModel(array $filterFields, QueryParametersModel $model): void
+    {
+        foreach ($filterFields as $filterKey => $filterValue) {
+            $model->addFilterField($filterKey, $filterValue);
         }
     }
 }

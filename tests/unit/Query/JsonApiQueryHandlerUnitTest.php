@@ -45,4 +45,12 @@ class JsonApiQueryHandlerUnitTest extends TestCase
         $this->assertSame(2, $model->getPaginationFields()->offset);
         $this->assertSame(10, $model->getPaginationFields()->limit);
     }
+
+    public function testReturnModelWithFilterFieldGivenInUrl(): void
+    {
+        $handler = new JsonApiQueryHandler();
+        $model = $handler->getQueryParsedFromUrl('http://localhost/api/users?filter[name]=John');
+
+        $this->assertSame('John', $model->getFilterFields()['name']);
+    }
 }

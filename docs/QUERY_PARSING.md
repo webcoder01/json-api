@@ -66,6 +66,42 @@ $sortFields[1]->getField(); // returns 'age'
 $sortFields[1]->isAscending(); // returns true
 ```
 
+### Filtering
+
+Specify filters in the URL, like this: `https://someapi.com/dogs?filter[name]=Snoopy&filter[breed]=Australian%20Shepherd`.  
+Filters are returned as an associative array where each filter key contains its associated value.
+
+#### Nested filters
+
+You can define nested filters by separating keys with dots.
+
+Example: `https://someapi.com/dogs?filter[owner.name]=Charlie&filter[owner.city]=London`.
+
+This produces a multidimensional filter array:
+
+```php
+[
+    'owner' => [
+        'name' => 'Charlie',
+        'city' => 'London',
+    ],
+]
+```
+
+#### Getting the data
+
+To retrieve the parsed filters, call the handler:
+```php
+$url = 'https://someapi.com/dogs?filter[name]=Snoopy&filter[owner.name]=Charlie';
+$handler = new JsonApiQueryHandler();
+$queryParameters = $handler->getQueryParsedFromUrl($url);
+
+$filterFields = $queryParameters->getFilterFields();
+
+$filterFields['name']; // returns 'Snoopy'
+$filterFields['owner']['name']; // returns 'Charlie'
+```
+
 ## Implementation
 
 ### Symfony (>= v5.x)

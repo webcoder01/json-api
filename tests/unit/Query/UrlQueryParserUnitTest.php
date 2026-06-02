@@ -64,4 +64,12 @@ class UrlQueryParserUnitTest extends TestCase
 
         $this->assertSame(['offset' => 2, 'limit' => null], $model->page);
     }
+
+    public function testReturnModelWithFilterFieldAndValueIfItIsGivenInUrl(): void
+    {
+        $parser = new UrlQueryParser();
+        $model = $parser->parse('http://localhost/api/users?filter[name]=John');
+
+        $this->assertSame('John', $model->filter['name']);
+    }
 }

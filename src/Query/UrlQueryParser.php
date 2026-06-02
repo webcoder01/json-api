@@ -29,7 +29,8 @@ final class UrlQueryParser
 
         return new QueryParsedModel(
             $parameters['sort'] ?? null,
-            $pageParameters
+            $pageParameters,
+            $parameters['filter'] ?? [],
         );
     }
 
